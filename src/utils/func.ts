@@ -36,30 +36,30 @@ export function filterTransactions(
   transactions: Transaction[],
   filters: any
 ): Transaction[] {
-  const bankCodes = new Set(
-    filters.bank?.map((b: any) => b.code.toUpperCase()) ?? []
+  const bankCodes: any = new Set(
+    filters?.bank ? filters.bank?.map((b: any) => b.code.toUpperCase()) ?? [] : []
   );
 
-  const categoryIds = new Set(
-    filters.categories?.map((c: any) => c.id) ?? []
+  const categoryIds: any = new Set(
+    filters?.categories ? filters.categories?.map((c: any) => c.id) ?? [] : []
   );
 
   const fromDate =
-    filters.date?.from ? new Date(filters.date.from) : null;
+    filters?.date?.from ? new Date(filters.date.from) : null;
 
   const toDate =
-    filters.date?.to ? new Date(filters.date.to) : null;
+    filters?.date?.to ? new Date(filters.date.to) : null;
 
   return transactions.filter(txn => {
     /* 1️⃣ Bank filter */
     const bankValue = txn.source || txn.bank;
     const bankMatch =
-      bankCodes.size === 0 ||
+      bankCodes?.size === 0 ||
       (bankValue && bankCodes.has(bankValue.toUpperCase()));
 
     /* 2️⃣ Category filter */
     const categoryMatch =
-      categoryIds.size === 0 ||
+      categoryIds?.size === 0 ||
       (txn.category && categoryIds.has(txn.category.id));
 
     /* 3️⃣ Date filter */
